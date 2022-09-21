@@ -1,0 +1,57 @@
+version: '3.7'
+services:
+  webrtc-janus:
+    build: 
+      context: ./webrtc-janus
+    hostname: webrtc-janus
+    container_name: webrtc-janus
+    volumes:
+      - ./data:/opt/data
+    privileged: true
+    devices:
+      - /dev
+    ports:
+      - "80:80"
+      - "7088:7088"
+      - "8088:8088"
+      - "8188:8188"
+      - "8989:8989"
+      - "8089:8089"
+      - "10000-10200:10000-10200/udp"
+      - "8000:8000"
+    environment:
+      - DOCKER_IP=${DOCKER_IP}
+  gstreamer-sample:
+    build: 
+      context: ./gstreamer-sample
+    hostname: gstreamer-sample
+    container_name: gstreamer-sample
+    privileged: true
+    devices:
+      - /dev
+    ports:
+      - "3478:3478"
+      - "3478:3478/udp"
+      - "3033:3033"
+      # 性能の低い端末だと、この個数のポートフォワーディングできない
+      # - "59000-65000:59000-65000/udp"
+    tty: true
+    depends_on:
+      - "webrtc-janus"
+    command: >
+      /opt/gst-webrtc-janus-sample/build/gst-webrtc-janus-sample "webrtcbin name=webrtcbin bundle-policy=max-bundle latency=100 stun-server=stun://stun.l.google.com:19302 
+        videotestsrc is-live=true 
+         ! videoconvert 
+         ! queue 
+         ! vp8enc target-bitrate=10240000 deadline=1 
+         ! rtpvp8pay 
+         ! application/x-rtp,media=video,encoding-name=VP8,payload=96 
+         ! webrtcbin. 
+        audiotestsrc is-live=true 
+         ! audioconvert 
+         ! audioresample 
+         ! queue 
+         ! opusenc 
+         ! rtpopuspay 
+         ! application/x-rtp,media=audio,encoding-name=OPUS,payload=97 
+         ! webrtcbin. "
