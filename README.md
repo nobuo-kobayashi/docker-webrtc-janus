@@ -1,12 +1,13 @@
 # WebRTC Janus を動作させるサンプル
 
-GStreamer 上で WebRTC を動作させるためのサンプルプログラムになります。
+WebRTC Janus を動作させるためのサンプルプログラムになります。
 
 |フォルダ|備考|
 |:--|:--|
-|data|クライアントとして使用する HTML|
 |gstreamer-sample|GStreamer から WebRTC Janus に映像を配信するサンプル|
 |webrtc-janus|WebRTC Janus を動作させるサンプル|
+|docker-compose-videoroom.yml|VideoRoom Plugin への配信を行う設定ファイル|
+|docker-compose.yml|Streaming Plugin への配信を行う設定ファイル|
 
 ## WebRTC Janus を HTTPS 化
 
