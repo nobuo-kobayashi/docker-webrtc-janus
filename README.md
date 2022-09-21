@@ -9,6 +9,9 @@ WebRTC Janus を動作させるためのサンプルプログラムになりま�
 |docker-compose-videoroom.yml|VideoRoom Plugin への配信を行う設定ファイル|
 |docker-compose.yml|Streaming Plugin への配信を行う設定ファイル|
 
+以下のページで簡単な説明がありますので、参照してください。<br>
+[https://www.gclue.jp/2022/09/gstreamer-webrtc-janus.html](https://www.gclue.jp/2022/09/gstreamer-webrtc-janus.html)
+
 ## WebRTC Janus を HTTPS 化
 
 下記のファイルに WebRTC Janus の設定が記載されています。
